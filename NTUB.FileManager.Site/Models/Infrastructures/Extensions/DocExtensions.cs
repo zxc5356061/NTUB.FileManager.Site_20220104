@@ -11,6 +11,8 @@ namespace NTUB.FileManager.Site.Models.Infrastructures.Extensions
     {
         public static DocEntity ToDocEntity(this Doc source)
         {
+            if (source == null) return null;
+            
             return new DocEntity
             {
                 Id = source.Id,

@@ -29,8 +29,8 @@ namespace NTUB.FileManager.Site.Models.Infrastructures
 
         public DocEntity Load(int docId)
         {
-            Doc model = db.Docs.Find(docId);
-            return model == null ? null : model.ToDocEntity();
+            DocEntity result = db.Docs.Find(docId).ToDocEntity();
+            return result;
         }
 
         public IEnumerable<DocEntity> Search(string docTitle, string docDescription)
