@@ -34,6 +34,7 @@ namespace NTUB.FileManager.Site.Models.Services
 
         public void Update(EditDocRequest editDocRequest)
         {
+            //先把現有資料從資料庫撈出來，只改需要更動的部分，剩下的不動。
             DocEntity editCurrentEntity = this._reop.Load(editDocRequest.Id);
             editCurrentEntity.Title = editDocRequest.Title;
             editCurrentEntity.Description = editDocRequest.Description;
