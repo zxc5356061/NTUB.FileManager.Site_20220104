@@ -137,6 +137,7 @@
     <Compile Include="Models\Entities\DocEntity.cs" />
     <Compile Include="Models\Infrastructures\DocRepository.cs" />
     <Compile Include="Models\Infrastructures\Extensions\DocEntityExtensions.cs" />
+    <Compile Include="Models\Infrastructures\Extensions\DocExtensions.cs" />
     <Compile Include="Models\Interfaces\IDocRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

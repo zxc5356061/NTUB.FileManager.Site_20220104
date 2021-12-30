@@ -21,7 +21,7 @@ namespace NTUB.FileManager.Site.Models.Infrastructures
         public void Delete(int docId)
         {
             Doc model = db.Docs.Find(docId);
-            if (model == null) {return; }
+            if (model == null) {return; }// return void
             
                 db.Docs.Remove(model);
                 db.SaveChanges();
@@ -29,7 +29,8 @@ namespace NTUB.FileManager.Site.Models.Infrastructures
 
         public DocEntity Load(int docId)
         {
-            throw new NotImplementedException();
+            Doc model = db.Docs.Find(docId);
+            return model == null ? null : model.ToDocEntity();
         }
 
         public IEnumerable<DocEntity> Search(string docTitle, string docDescription)
@@ -40,7 +41,7 @@ namespace NTUB.FileManager.Site.Models.Infrastructures
         public void Update(DocEntity docEntity)
         {
             Doc model = db.Docs.Find(docEntity.Id);
-            if(model == null) { return; }
+            if(model == null) { return; }// return void
 
             model.Title = docEntity.Title;
             model.Description = docEntity.Description;
