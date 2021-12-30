@@ -44,8 +44,13 @@ namespace NTUB.FileManager.Site.Models.Infrastructures
 
             if (!string.IsNullOrEmpty(docDescription))
             {
-
+                query = query.Where(x=> x.Description.Contains(docDescription));
             }
+
+            var data = query.OrderBy(x => x.Title).ToList();
+
+            var result = data.Select(x => x.ToDocEntity());//因為ToDocEntity()無法被轉成SQL語法，所以必須分開來寫
+            return result;
         }
 
         public void Update(DocEntity docEntity)
