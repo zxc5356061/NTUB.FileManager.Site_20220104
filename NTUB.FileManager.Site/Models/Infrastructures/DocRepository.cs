@@ -20,8 +20,8 @@ namespace NTUB.FileManager.Site.Models.Infrastructures
 
         public void Delete(int docId)
         {
-            var model = db.Docs.Find(docId);
-            if (model != null) return;
+            Doc model = db.Docs.Find(docId);
+            if (model == null) {return; }
             
                 db.Docs.Remove(model);
                 db.SaveChanges();
@@ -39,7 +39,13 @@ namespace NTUB.FileManager.Site.Models.Infrastructures
 
         public void Update(DocEntity docEntity)
         {
-            throw new NotImplementedException();
+            Doc model = db.Docs.Find(docEntity.Id);
+            if(model == null) { return; }
+
+            model.Title = docEntity.Title;
+            model.Description = docEntity.Description;
+            model.FileName = docEntity.FileName;
+            model.ModifiedTime = docEntity.ModifiedTime;
         }
     }
 }
