@@ -1,4 +1,5 @@
 ﻿using NTUB.FileManager.Site.Models.DTOs;
+using NTUB.FileManager.Site.Models.Entities;
 using NTUB.FileManager.Site.Models.Infrastructures;
 using NTUB.FileManager.Site.Models.Interfaces;
 using System;
@@ -20,14 +21,24 @@ namespace NTUB.FileManager.Site.Models.Services
             this._reop = reop;
         }
 
-        public void Create(CreateDocRequest request) 
+        public void Create(CreateDocRequest createDocRequest) 
         {
-            throw new NotImplementedException();
+            DocEntity createNewEntity = new DocEntity
+            {
+                Title = createDocRequest.Title,
+                Description = createDocRequest.Description,
+                FileName = createDocRequest.FileName,
+                ModifiedTime = DateTime.Now,
+            };
         }
 
-        public void Update(EditDocRequest request)
+        public void Update(EditDocRequest editDocRequest)
         {
-            throw new NotImplementedException();
+            DocEntity editCurrentEntity = this._reop.Load(editDocRequest.Id);
+            editCurrentEntity.Title = editDocRequest.Title;
+            editCurrentEntity.Description = editDocRequest.Description;
+            editCurrentEntity.ModifiedTime = DateTime.Now;
+            _reop.Update(editCurrentEntity);
         }
 
         public void Delete(int docId)
