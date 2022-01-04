@@ -11,40 +11,47 @@ namespace NTUB.FileManager.Site.Models.Services
 {
     public class DocService
     {
-        private readonly IDocRepository _reop;
+        private readonly IDocRepository _repo;
+
         public DocService()//給service用的
         {
-            this._reop = new DocRepository();
+            this._repo = new DocRepository();
         }
-        public DocService(IDocRepository reop)//給單元測試用的
+        public DocService(IDocRepository repo)//給單元測試用的
         {
-            this._reop = reop;
+            _repo = repo;
         }
 
-        public void Create(CreateDocRequest createDocRequest) 
+
+        public void Create(CreateDocRequest request)
         {
-            DocEntity createNewEntity = new DocEntity
+            DocEntity entity = new DocEntity
             {
-                Title = createDocRequest.Title,
-                Description = createDocRequest.Description,
-                FileName = createDocRequest.FileName,
+                Title = request.Title,
+                Description = request.Description,
+                FileName = request.FileName,
                 ModifiedTime = DateTime.Now,
             };
+            _repo.Create(entity);
         }
 
-        public void Update(EditDocRequest editDocRequest)
+
+        public void Update(EditDocRequest request)
         {
             //先把現有資料從資料庫撈出來，只改需要更動的部分，剩下的不動。
-            DocEntity editCurrentEntity = this._reop.Load(editDocRequest.Id);
-            editCurrentEntity.Title = editDocRequest.Title;
-            editCurrentEntity.Description = editDocRequest.Description;
-            editCurrentEntity.ModifiedTime = DateTime.Now;
-            _reop.Update(editCurrentEntity);
+            DocEntity entity = this._repo.Load(request.Id);
+
+            entity.Title = request.Title;
+            entity.Description = request.Description;
+            entity.FileName = request.FileName;
+            entity.ModifiedTime = DateTime.Now;
+            _repo.Update(entity);
         }
+
 
         public void Delete(int docId)
         {
-            throw new NotImplementedException();
+            this._repo.Delete(docId);
         }
     }
 }

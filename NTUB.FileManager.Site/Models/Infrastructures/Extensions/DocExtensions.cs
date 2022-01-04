@@ -9,7 +9,7 @@ namespace NTUB.FileManager.Site.Models.Infrastructures.Extensions
 {
     public static class DocExtensions
     {
-        public static DocEntity ToDocEntity(this Doc source)
+        public static DocEntity DocToEntity(this Doc source)
         {
             if (source == null) return null;
             

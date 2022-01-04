@@ -12,56 +12,57 @@ namespace NTUB.FileManager.Site.Models.Infrastructures
     public class DocRepository : IDocRepository
     {
         private AppDbContext db = new AppDbContext();//Using EF Framework
-        public void Create(DocEntity docEntity)
+
+        public void Create(DocEntity entity)
         {
-            db.Docs.Add(docEntity.ToDoc());
-            db.SaveChanges();           
+
+            db.Docs.Add(entity.EntityToDoc());
+            db.SaveChanges();
+
         }
 
         public void Delete(int docId)
         {
-            Doc model = db.Docs.Find(docId);
-            if (model == null) {return; }// return void
-            
-                db.Docs.Remove(model);
-                db.SaveChanges();
+            var model = db.Docs.Find(docId);
+            if (model == null) return;// return void
+            db.Docs.Remove(model);
+            db.SaveChanges();
         }
+
 
         public DocEntity Load(int docId)
         {
-            DocEntity result = db.Docs.Find(docId).ToDocEntity();
-            return result;
+            var model = db.Docs.Find(docId);
+            return model == null ? null : model.DocToEntity();
         }
 
-        public IEnumerable<DocEntity> Search(string docTitle, string docDescription)
+        public IEnumerable<DocEntity> Search(string title, string description)
         {
             var query = db.Docs.AsQueryable();
-
-            if (!string.IsNullOrEmpty(docTitle))
+            if (!string.IsNullOrEmpty(title))
             {
-                query = query.Where(x => x.Title.Contains(docTitle));
+                query = query.Where(x => x.Title.Contains(title));
             }
-
-            if (!string.IsNullOrEmpty(docDescription))
+            if (!string.IsNullOrEmpty(description))
             {
-                query = query.Where(x=> x.Description.Contains(docDescription));
+                query = query.Where(x => x.Description.Contains(description));
             }
-
             var data = query.OrderBy(x => x.Title).ToList();
-
-            var result = data.Select(x => x.ToDocEntity());//因為ToDocEntity()無法被轉成SQL語法，所以必須分開來寫
+            var result = data.Select(x => x.DocToEntity());//因為ToDocEntity()無法被轉成SQL語法，所以必須分開來寫
             return result;
         }
 
-        public void Update(DocEntity docEntity)
+        public void Update(DocEntity entity)
         {
-            Doc model = db.Docs.Find(docEntity.Id);
-            if(model == null) { return; }// return void
+            Doc model = db.Docs.Find(entity.Id);
+            if (model == null) return;
 
-            model.Title = docEntity.Title;
-            model.Description = docEntity.Description;
-            model.FileName = docEntity.FileName;
-            model.ModifiedTime = docEntity.ModifiedTime;
+            model.Title = entity.Title;
+            model.Description = entity.Description;
+            model.ModifiedTime = entity.ModifiedTime;
+            model.FileName = entity.FileName;
+
+            db.SaveChanges();
         }
     }
 }

@@ -9,10 +9,10 @@ namespace NTUB.FileManager.Site.Models.Interfaces
 {
     public interface IDocRepository
     {
-        void Create(DocEntity docEntity);
-        void Update(DocEntity docEntity);
-        void Delete(int docId);
-        IEnumerable<DocEntity> Search(string docTitle, string docDescription);
-        DocEntity Load(int docId);
-    }
+		void Create(DocEntity entity);
+		void Update(DocEntity entity);
+		void Delete(int docId);
+		IEnumerable<DocEntity> Search(string title, string description);
+		DocEntity Load(int docId);
+	}
 }

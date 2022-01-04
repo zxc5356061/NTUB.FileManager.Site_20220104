@@ -8,25 +8,19 @@ namespace NTUB.FileManager.Site.Models.EFModels
 
     public partial class Doc
     {
-        [Key]
-        [Column(Order = 0)]
         public int Id { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
+        [Required]
         [StringLength(30)]
         public string Title { get; set; }
 
         [StringLength(60)]
         public string Description { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
+        [Required]
         [StringLength(40)]
         public string FileName { get; set; }
 
-        [Key]
-        [Column(Order = 3)]
         public DateTime ModifiedTime { get; set; }
     }
 }
